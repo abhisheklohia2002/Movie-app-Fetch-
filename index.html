@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+
+        }
+        p{
+            margin-top: 1vh;
+            font-size: 18px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+section{
+    background-color: rgb(126, 166, 166);
+    height: 40vw;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding-bottom: 2vw;
+}
+div{
+    text-align: center;
+    
+}
+input{
+    color: brown;
+    height: 2vw;
+    margin-top: 1vw;
+    width: 23vw;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    font-size: 23px;
+    background-color: antiquewhite;
+
+}
+button{
+    font-size: 18px;
+    margin-top:15px;
+    height: 38px;
+    width: 10vw;
+    background-color: coral;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+button:hover{
+    background-color: brown;
+}
+#p{
+    font-size: 35px;
+    color: cadetblue;
+    margin-bottom: 0%;
+    font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+}
+body{
+    background-color: beige;
+}
+#div{
+ margin: 2vw 2vw 4vw 2vw;
+ margin-bottom: 5vw;
+    background-color: cornsilk;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+    </style>
+</head>
+<body>
+    <section>
+
+    </section>
+<div>
+    <p id="p">Search The Movie</p>
+    <input id="text" type="text"/><br>
+    <button id="btn">Search</button>
+</div>
+</body>
+</html>
+<script>
+    
+document.getElementById("btn").addEventListener("click",runprogram);
+function runprogram(){
+    var value = document.querySelector("#text").value;
+
+    if(value != ""){
+
+    
+
+    var data = "2ddcb06c"
+// var url = "http://www.omdbapi.com/?i=tt3896198&apikey=2ddcb06c";
+var url = `http://www.omdbapi.com/?t=${value}&apikey=${data}`
+// console.log(url)
+// http://www.omdbapi.com/?apikey=[yourkey]&
+
+
+let out = fetch(url).then(function(res){
+return res.json();
+
+}).then(function(res){
+    console.log(res)
+})
+.catch(function(err){
+    console.log(err);
+
+});
+console.log(out);
+getData();
+let users;
+
+// Async await
+async function getData(){
+
+    try{
+        let res = await fetch(url);
+    let users = await res.json();
+
+    console.log(users);
+    var arr = [];
+    arr.push(users)
+    append(arr);
+    
+     
+    }
+    catch(err){
+        console.log(err);
+
+    }
+  
+}
+
+}
+}
+
+
+
+
+function append(users){
+
+users.forEach(function(elem){
+  var div = document.createElement("div");
+  div.setAttribute("id","div")
+  var img = document.createElement("img");
+  img.src = elem.Poster;
+  var p1 = document.createElement("p");
+  p1.innerText = elem.Title;
+
+  var p2 = document.createElement("p");
+  p2.innerText = elem.Year;
+
+  var p3 = document.createElement("p");
+  p3.innerText = elem.Language;
+  var p4 = document.createElement("p");
+  p4.innerText = elem.Genre
+
+  div.append(img,p1,p3,p4,p2)
+
+      document.querySelector("section").append(div);
+
+
+  });
+
+
+}
+
+
+</script>
+
+
